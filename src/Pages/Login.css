@@ -1,0 +1,92 @@
+/* src/Login.css */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    
+  }
+  
+  #root {
+    height: 100%;
+  }
+  
+  .Login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+     /* 배경 이미지 설정 */
+    
+    background-position: center;
+  }
+  
+  form {
+    background: rgba(100, 218, 165, 0.7); /* 반투명 배경 */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+  }
+  
+  .input-box {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .input-box input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .input-box .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+  
+  .register {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .register a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  .register a:hover {
+    text-decoration: underline;
+  }
+  
+  .h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  

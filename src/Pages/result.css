@@ -1,0 +1,81 @@
+
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 40px;
+    padding-top: 30px;
+  }
+  
+  .info-box {
+    background-color: rgba(103, 241, 10, 0.1);
+    border-radius: 20px;
+    width: 80%;
+    max-width: 500px;
+    height: 550px; /* 세로로 길게 설정 */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+   
+    
+  }
+  .info-image {
+    width: 300px;
+    height: 150px;
+    border-radius: 10%; 
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+  
+  .info-box p {
+    color: rgb(7, 7, 7);
+    font-size: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .info-box p1{
+   color: rgb(165, 216, 82);
+   font-weight: bold;
+   margin-bottom: 5px;
+   font-size: 1.3rem;  
+  }
+  .info-box p2{
+    color: rgb(165, 216, 82);
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+    margin-left: 15px;  
+  }
+
+  .info-box ul{
+    color:rgb(18, 16, 16);
+    font-size: 1.1rem;;
+  }
+  
+  .musclePic{
+    flex-direction: column;
+  }
+
+  .musclePic1,.musclePic2{
+    width:180px;
+    height: 130px;
+    border-radius: 10%;
+  }
+
+  .button{
+        display: inline-block;
+        padding: 8px 16px; /* 패딩 크기 조정 */
+        font-size: 14px; /* 폰트 크기 조정 */
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background-color: #0d9e0d;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        
+       
+  }

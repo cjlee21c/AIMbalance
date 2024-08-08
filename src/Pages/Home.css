@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.section {
+  height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  background: none;
+}
+.welcome-section{
+  background: url('../Assets/core.jpeg') no-repeat center top 5px;
+  background-size: cover;
+  height: 700px;
+}
+
+.welcome-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 검은색 오버레이 */
+  z-index: 1; /* 오버레이가 배경 이미지 위에 위치하도록 설정 */
+}
+.text-container {
+  right: 40px;
+  padding-right: 50px;
+  z-index: 2; /* 오버레이 위에 표시 */
+  max-width: 700px;
+  position: absolute;
+}
+
+.impact-section {
+  background: white;
+  color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.impact-section img {
+  border-radius: 30%; 
+  width: 400px;
+  height: 400px; 
+  object-fit: cover;
+}
+
+.section h2 {
+  font-size: 3rem;
+  z-index: 1;
+}
+
+.section p {
+  font-size: 1.5rem;
+  max-width: 800px;
+  z-index: 1;
+}
+
+button {
+  margin: 10px;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  z-index: 1;
+  width: 200px;
+  height: 70px;
+}
+
+
+/* 미디어 쿼리 */
+@media (max-width: 767px) {
+  .section h2 {
+    font-size: 2rem;
+  }
+
+  .section p {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 8px 16px;
+    
+  }
+}
+
+
+

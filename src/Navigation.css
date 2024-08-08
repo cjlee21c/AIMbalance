@@ -1,0 +1,58 @@
+/* 내비게이션 바 스타일 */
+.navbar-custom {
+  background-color: rgb(10, 10, 10);
+  backdrop-filter: blur(10px); /* 배경 블러 효과 추가 */
+  position: fixed; 
+  width: 100%;
+  height: 60px;
+  top: 0;
+  position: fixed; /* 스크롤 시 고정 */
+  z-index: 1000; /* 다른 요소들 위에 표시 */
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  margin-left: 150px; 
+}
+.brand-aim {
+  color: #ff6347; 
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  margin-right: 5px;
+}
+.brand-balance {
+  color: #87e4e4; /* 기존 색상 */
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-transform: lowercase; /* 소문자로 */
+  letter-spacing: 0.05rem;
+}
+
+.navbar-custom .navbar-brand {
+  color: #87e4e4;
+  margin-left: 150px; 
+}
+
+.navbar-custom .nav-link {
+  color: #87e4e4;
+  margin-right: 40px;
+  margin-top: 10px;
+}
+
+
+.navbar-custom .dropdown-menu {
+  background-color: #87e4e4; /* 약간의 투명도를 가진 드롭다운 메뉴 */
+  border: none;
+}
+
+.navbar-custom .dropdown-item {
+  color: #030303;
+}
+
+.navbar-custom .dropdown-item:hover {
+  color: #00aaff;
+  background-color: transparent;
+}
