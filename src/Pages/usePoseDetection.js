@@ -78,8 +78,9 @@ export function usePoseDetection(isCameraOn, setComment, setRepCount, setShoulde
             const leftArmAngle = calculateAngle(leftHip, leftShoulder, leftElbow);
             const rightArmAngle = calculateAngle(rightHip, rightShoulder, rightElbow);
 
-            const startAngle = 60;
+            const startAngle = 70;
             const endAngle = 140;
+
 
             const interpolateColor = (angle, minAngle, maxAngle) => {
               const ratio = Math.min(Math.max((angle - minAngle) / (maxAngle - minAngle), 0), 1);
@@ -141,7 +142,7 @@ export function usePoseDetection(isCameraOn, setComment, setRepCount, setShoulde
               setLeftUp(prevCount => prevCount + 1);
               rightDetectRef.current = true;
               setTimeout(() => { rightDetectRef.current = false; }, 3000);
-            } else if (wristDifference > 70 && leftWristY < rightWristY && !leftDetectRef.current) {
+            } else if (wristDifference > 50 && leftWristY < rightWristY && !leftDetectRef.current) {
               setWristWarning('Your left wrist is up');
               setRightUp(prevCount => prevCount + 1);
               leftDetectRef.current = true;

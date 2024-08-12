@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
+import {signup} from '../apiRequests'
+
 
 
 
@@ -18,40 +20,24 @@ function Signup() {
     const navigate = useNavigate(); 
 
 
-    const handleSignup = (e) => {
+    const handleSignup = async(e) => {
         e.preventDefault();
         setLoading(true);
 
-        fetch('http://localhost:3000/signup',{                                                                                                                                                                                                                                                                                                                 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password, email}),
-        })
-        .then((response) => {
-            if (!response.ok){
-                throw new Error('Signup failed');
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log('Response from server: ', data);
-            setMessage('Signup successful!');
-            setTimeout(() =>{
-              navigate('/Login');
-            }, 1500);
-            
-        })
-        .catch((error) => {
-            console.error('Error during fetch:', error);
-            setMessage("Something went wrong")
-        })
-        .finally(() => {
+        try {
+          const data = await signup(username, password, email);
+          setMessage('signup successful!');
+          setTimeout(()=>{
+            navigate('/login');
+          }, 1500);
+        } catch (error) {
+          console.error('Error during signup:', error);
+          setMessage('Something went wrong');
+        } finally {
           setLoading(false);
-        });
-    };
-    
+        }
+      };
+        
     return (
       <div className="Login">
         <form onSubmit= {handleSignup}>

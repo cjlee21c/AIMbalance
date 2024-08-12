@@ -126,7 +126,7 @@ export const shoulderLiveLineChartOptions = {
         y: {
         title: {
             display: true,
-            text: 'Y Position'
+            
         },
         beginAtZero: true
         },

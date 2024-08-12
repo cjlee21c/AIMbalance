@@ -37,6 +37,10 @@
   height: 110px;
   margin-left: 10px;
 }
+.warning-container{
+  padding-left: 40px;
+  padding-top: 10px;
+}
 
 .shoulderWarning-container, .wristWarning-container{
   width: 550px;
@@ -90,7 +94,8 @@
 
 .video-container {
   padding-top: 60px;
-  width: 800px;
+  width: 750px;
+  padding-left: 0;
   position: relative;
 }
 
@@ -104,8 +109,9 @@
 }
 
 
-.graph{
-  height: 310px;
+.graph-container{
+  height: 350px;
+  width: 700px;
 }
 
 .result-button{
@@ -119,7 +125,8 @@
     border: none;
     border-radius: 4px;
     width: 200px;
-    height: 50px;   
+    height: 50px;  
+    
 }
 .reset-button{
   display: inline-block;

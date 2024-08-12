@@ -10,7 +10,6 @@ import Home from './Pages/Home'
 import Navigation from './Navigation';
 import ShoulderLive from './Pages/ShoulderLive';
 import LatPullDown from './Pages/LatPullDown';
-import ShoulderResult from './Pages/ShoulderResult';
 import Signup from './Pages/Signup';
 import Data from './Pages/Data';
 
@@ -48,7 +47,6 @@ function App() {
                     <Route path='/ShoulderLive' element={<ShoulderLive />}></Route>  
                     <Route path='/LatPullDown' element={<LatPullDown />}></Route>         
                     <Route path='/Login' element={<Login />}></Route>
-                    <Route path='/ShoulderResult' element={<ShoulderResult />}></Route>
                     <Route path='/Signup' element={<Signup />}></Route>
                     <Route path='/Data' element={<Data />}></Route>
 

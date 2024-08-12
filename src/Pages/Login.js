@@ -5,6 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom'; 
 import { useSetRecoilState } from 'recoil';
 import { isLoggedInStateAtom, usernameStateAtom } from '../atoms';
+import {login} from '../apiRequests'
 
 
 function Login() {
@@ -15,24 +16,11 @@ function Login() {
     const setIsLoggedIn = useSetRecoilState(isLoggedInStateAtom);
     const setGlobalUsername = useSetRecoilState(usernameStateAtom);
   
-    const handleLogin = (e) =>{
+    const handleLogin = async (e) =>{
       e.preventDefault();
-      fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers : {
-          'Content-Type': 'application/json',   
-        },
-        credentials: 'include',
-        body: JSON.stringify({ username, password }),
-      })
-      //converting data into json form
-      .then((response) =>{
-        if (!response.ok){
-          throw new Error('login failed');
-        }
-        return response.json();
-      })
-      .then((data) => {
+      
+      try{
+        const data = await login(username, password);
         console.log("Response: ", data);
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('username', username);
@@ -42,14 +30,11 @@ function Login() {
         setTimeout(() =>{
           navigate('/Select');
         }, 1500);
-      })
-      //
-      .catch((error) => {
+      } catch (error) {
         console.error("Error during fetch:", error)
         setMessage('Something went wrong')
-      });
-    }
-
+      }
+    };
 
     return (
       <div className="Login">
@@ -87,6 +72,6 @@ function Login() {
       </div>
     );
   }
-  
+
   export default Login;
   

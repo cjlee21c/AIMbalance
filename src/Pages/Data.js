@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Doughnut, Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import './Data.css';
@@ -12,6 +11,7 @@ import cause1 from '../Assets/cause1.jpeg';
 import chest from '../Assets/chest.jpg';
 import back from '../Assets/back.jpeg';
 import core from '../Assets/core.jpeg';
+import { fetchSuccessRate } from '../apiRequests';
 
 function Data() {
   const [averageRate, setAverageRate] = useState(0);
@@ -20,27 +20,34 @@ function Data() {
   const [recentData, setRecentData] = useState({ leftUp: 0, rightUp: 0, repCount: 0 });
   const [lineChartData, setLineChartData] = useState(null);
   
-  const successRate = ((recentData.repCount - (recentData.leftUp + recentData.rightUp)) / recentData.repCount) * 100;
+  const successRate = Math.round(((recentData.repCount - (recentData.leftUp + recentData.rightUp)) / recentData.repCount) * 100);
 
+  
   useEffect(() => {
-    axios.get('http://localhost:3000/success-rate', { withCredentials: true })
+    fetchSuccessRate()
       .then(response => {
-        const data = response.data.recentData || { leftUp: 0, rightUp: 0, repCount: 0 };
-        const successReps = data.repCount - (data.leftUp + data.rightUp);
-        animateValue(setAverageRate, response.data.averageRate, 2000);
-        animateValue(setAverageLeftUpRate, response.data.averageLeftUpRate, 2000);
-        animateValue(setAverageRightUpRate, response.data.averageRightUpRate, 2000);
-        setRecentData({ ...data, successReps });
+      const data = response; // response.data 대신 response 자체를 사용
+      const averageRate = data.averageRate || 0;
+      const averageLeftUpRate = data.averageLeftUpRate || 0;
+      const averageRightUpRate = data.averageRightUpRate || 0;
+      const recentData = data.recentData || { leftUp: 0, rightUp: 0, repCount: 0 };
+      const successReps = recentData.repCount - (recentData.leftUp + recentData.rightUp);
 
-        const successRates = response.data.successRates;
-        const leftUpRates = response.data.leftUpRates;
-        const rightUpRates = response.data.rightUpRates;
-        const dates = response.data.dates.map(date => new Date(date).toLocaleDateString());
+      
+      animateValue(setAverageRate, averageRate, 2000);
+      animateValue(setAverageLeftUpRate, averageLeftUpRate, 2000);
+      animateValue(setAverageRightUpRate, averageRightUpRate, 2000);
+      setRecentData({ ...recentData, successReps });
 
-        const chartData = getLineChartConfig(dates, successRates, leftUpRates, rightUpRates);
-        setLineChartData(chartData);
-      })
-      .catch(error => console.error("Error fetching success rate:", error));
+      const successRates = data.successRates || [];
+      const leftUpRates = data.leftUpRates || [];
+      const rightUpRates = data.rightUpRates || [];
+      const dates = (data.dates || []).map(date => new Date(date).toLocaleDateString());
+
+      const chartData = getLineChartConfig(dates, successRates, leftUpRates, rightUpRates);
+      setLineChartData(chartData);
+    })
+    .catch(error => console.error("Error fetching success rate:", error));
   }, []);
 
   const animateValue = (setValue, end, duration) => {

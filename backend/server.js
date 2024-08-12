@@ -53,54 +53,87 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-app.post('/login', async(req, res) => {
-    const {username, password } = req.body;
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
 
-    if (!username || !password){
+    if (!username || !password) {
         console.log("Validation error: missing fields");
         return res.status(400).json({ message: "All fields are required" });
     }
-    console.log("Received login request with data:", { username, password});
+    console.log("Received login request with data:", { username, password });
 
-    try{
+    try {
         const checkUserNameQuery = 'SELECT * FROM users where username = ?';
         const results = await queryAsync(checkUserNameQuery, [username]);
-        
+
         if (results.length > 0) {
             const user = results[0];
             const match = await bcrypt.compare(password, user.password);
             if (match) {
-                //generating token with payload, secret key, and option
-                const token = jwt.sign({userId: user.id, username: user.username},
-                                        SECRET_KEY,
-                                        {expiresIn: '1h'});
-                res.cookie('token', token, { 
-                    httpOnly: true, 
+                // 토큰 생성
+                const accessToken = jwt.sign({ userId: user.id, username: user.username },
+                    SECRET_KEY,
+                    { expiresIn: '15m' });
+                const refreshToken = jwt.sign({ userId: user.id, username: user.username },
+                    SECRET_KEY,
+                    { expiresIn: '7d' });
+
+                const updateTokenQuery = 'UPDATE users SET refreshToken = ? WHERE id = ?';
+                await queryAsync(updateTokenQuery, [refreshToken, user.id]);
+
+                res.cookie('accessToken', accessToken, {
+                    httpOnly: true,
                     secure: process.env.NODE_ENV === 'production'
                 });
-                return res.status(200).json({message: "Login successful" });
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production'
+                });
+
+                return res.status(200).json({ message: "Login successful" });
             } else {
-                return res.status(400).json({message: "Invalid password" });
+                return res.status(400).json({ message: "Invalid password" });
             }
         } else {
-            return res.status(400).json({message: "Username does not exist"});
+            return res.status(400).json({ message: "Username does not exist" });
         }
     } catch (error) {
         console.error("Error during login: " + error.message);
-        res.status(500).json({ message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 
-const authenticateTokens = (req,res,next) => {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({message: "No token provided"});
 
-    jwt.verify(token, SECRET_KEY, (err,user)=> {
-        if (err) return res.status(403).json({message:"Invalid token"});
+
+const authenticateTokens = (req, res, next) => {
+    console.log('Cookies: ', req.cookies);
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).json({ message: "No token provided" });
+
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) return res.status(403).json({ message: "Invalid token" });
         req.user = user;
         next();
     });
 };
+
+app.post('/refresh-token', async(req,res) =>{
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) return res.status(401).json({message: 'No refresh token provided'});
+
+    try {
+        const user = jwt.verify(refreshToken, SECRET_KEY);
+        const results = await queryAsync('SELECT * FROM users WHERE id = ? AND refreshToken = ?', [user.userId, refreshToken]);
+        if (results.length === 0) return res.status(403).json({ message: "Invalid refresh token" });
+
+        const newAccessToken = jwt.sign({ userId: user.userId, username: user.username }, SECRET_KEY, { expiresIn: '15m' });
+        console.log('Generated New AccessToken:', newAccessToken); // 새 토큰 확인
+        res.cookie('accessToken', newAccessToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+        res.status(200).json({ accessToken: newAccessToken });    
+    } catch (error) {
+        return res.status(403).json({ message: "Invalid refresh token" });
+    }
+});
 
 
 app.post('/save', authenticateTokens, async(req,res) => {
@@ -126,13 +159,13 @@ app.get('/success-rate', authenticateTokens, async(req,res) =>{
     const latestDataQuery = 'select rightUp, leftUp, repCount FROM workoutData where username = ? AND repCount > 0 ORDER BY id DESC LIMIT 1';
 
     try{
-        const results = await queryAsync(successQuery,[username]);
         let successRates = [];
         let leftUpRates = [];
         let rightUpRates = [];
         let dates = [];
-        
 
+        const results = await queryAsync(successQuery,[username]);
+        
         results.forEach(result => {
             const totalSuccessfulReps = result.repCount - (result.rightUp + result.leftUp);
             const successRate = (totalSuccessfulReps / result.repCount) * 100;
@@ -150,15 +183,15 @@ app.get('/success-rate', authenticateTokens, async(req,res) =>{
             : 0;       
         const roundedRate = Math.round(averageRate);
 
-        const avergaeLeftUpRate = leftUpRates.length > 0
+        const averageLeftUpRate = leftUpRates.length > 0
             ? leftUpRates.reduce((a,b) => a + b, 0) / leftUpRates.length
             : 0;
-        const roundedLeftUp = Math.round(avergaeLeftUpRate);
+        const roundedLeftUp = Math.round(averageLeftUpRate);
 
-        const avergaeRightUpRate = rightUpRates.length > 0
+        const averageRightUpRate = rightUpRates.length > 0
             ? rightUpRates.reduce((a,b) => a + b, 0) / rightUpRates.length
             : 0;
-        const roundedRightUp = Math.round(avergaeRightUpRate);       
+        const roundedRightUp = Math.round(averageRightUpRate);       
 
         const latestResults = await queryAsync(latestDataQuery, [username]);
         const latestData = latestResults.length > 0 ? latestResults[0] : null;
