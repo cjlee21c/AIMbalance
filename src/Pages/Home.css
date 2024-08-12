@@ -19,7 +19,7 @@ body {
 .welcome-section{
   background: url('../Assets/core.jpeg') no-repeat center top 5px;
   background-size: cover;
-  height: 700px;
+  
 }
 
 .welcome-section::before {
@@ -41,8 +41,8 @@ body {
 }
 
 .impact-section {
-  background: white;
-  color: black;
+  background: rgb(23, 22, 22);
+  color: rgb(243, 240, 240);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
