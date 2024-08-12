@@ -8,17 +8,19 @@ const { promisify } = require('util');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
-
+require('dotenv').config();
 app.use(express.json());
 //using credentials: true, allowing sending cookie through true
 app.use(cors({origin: true, credentials: true}));
 app.use(cookieParser());
-const SECRET_KEY = process.env.SECRET_KEY || 'hello';
+const SECRET_KEY = process.env.SECRET_KEY;
+
+
 
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'MUisbtch8930!',
+    password: 'process.env.DB_PASSWORD',
     database: 'imbalance',
 });
 
