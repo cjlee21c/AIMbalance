@@ -39,7 +39,7 @@ function Signup() {
       };
         
     return (
-      <div className="Login">
+      <div className="Login" style={{paddingTop:'150px'}}>
         <form onSubmit= {handleSignup}>
           <h1 className='h1'><strong>Sign-Up</strong></h1>
           <div className='input-box'>

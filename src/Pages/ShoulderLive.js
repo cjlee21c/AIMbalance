@@ -46,7 +46,6 @@ function ShoulderLive() {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    
     try {
       const data = await saveWorkoutData(globalUsername, leftUp, rightUp, repCount);
       console.log('Done successfully: ', data);

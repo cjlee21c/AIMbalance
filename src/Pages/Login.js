@@ -37,7 +37,7 @@ function Login() {
     };
 
     return (
-      <div className="Login">
+      <div className="Login" style={{paddingTop:'150px'}}>
         <form onSubmit = {handleLogin}>
           <h1 className='h1'>Login</h1>
           <div className='input-box'>
