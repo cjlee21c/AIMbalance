@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { isLoggedInStateAtom, usernameStateAtom } from './atoms';
-import SquatLive from './Pages/Squat'
 import Select from './Pages/Select'
 import Login from './Pages/Login'
 import Home from './Pages/Home'
@@ -43,7 +42,6 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home />}></Route>
                     <Route path='/select' element={<Select />}></Route>
-                    <Route path='/Squat' element={<SquatLive />}></Route>
                     <Route path='/ShoulderLive' element={<ShoulderLive />}></Route>  
                     <Route path='/LatPullDown' element={<LatPullDown />}></Route>         
                     <Route path='/Login' element={<Login />}></Route>

@@ -25,8 +25,8 @@ function Data() {
   
   useEffect(() => {
     fetchSuccessRate()
-      .then(response => {
-      const data = response; // response.data 대신 response 자체를 사용
+      .then(data => {
+       // response.data 대신 response 자체를 사용
       const averageRate = data.averageRate || 0;
       const averageLeftUpRate = data.averageLeftUpRate || 0;
       const averageRightUpRate = data.averageRightUpRate || 0;

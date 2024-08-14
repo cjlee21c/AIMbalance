@@ -20,7 +20,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'process.env.DB_PASSWORD',
+    password: process.env.DB_PASSWORD,
     database: 'imbalance',
 });
 

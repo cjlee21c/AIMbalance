@@ -41,7 +41,7 @@ body {
 }
 
 .impact-section {
-  background: rgb(23, 22, 22);
+  background: rgb(5, 5, 5);
   color: rgb(243, 240, 240);
   display: grid;
   grid-template-columns: 1fr 1fr;
