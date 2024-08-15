@@ -13,6 +13,10 @@ If you are passonate gym goer, this is the perfect place to explore!!\
 
     ***AIMbalance can help you***
 
+## Demo Video
+![Demo Video](./src/Assets/demoImage.png)
+youtube: https://youtu.be/72bsU4TObF4
+
 ## Pose Detection with MoveNet
 
 ![Pose Detection](./src/Assets/movenet-image.gif)
